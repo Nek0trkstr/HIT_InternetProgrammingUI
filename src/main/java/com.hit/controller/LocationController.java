@@ -2,9 +2,10 @@ package com.hit.controller;
 
 import com.hit.client.Client;
 import com.hit.dm.Location;
-import com.hit.graph.Graph;
+import com.hit.dm.Place;
+import com.hit.graph.GraphPath;
+import com.hit.graph.Vertex;
 
-import java.io.IOException;
 import java.util.List;
 
 public class LocationController {
@@ -14,13 +15,15 @@ public class LocationController {
         this.client = client;
     }
 
-    public void listLocations() {
+    public List<Location> listLocations() {
+        List<Location> locationList = null;
         try {
-            List<Location> locationList = client.listLocations();
+            locationList = client.listLocations();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+        return locationList;
     }
 
     public void getLocation(String name) {
@@ -42,13 +45,38 @@ public class LocationController {
         }
     }
 
+    public void editLocation() {
+        try {
+            Location editedLocation = new Location("location", "edited location");
+            client.editLocation(editedLocation);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteLocation() {
+        try {
+            client.deleteLocation("location");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         try {
             Client client = new Client("localhost", 34567);
             LocationController controller = new LocationController(client);
-//            controller.listLocations();
-//            controller.getLocation("Great waterfall");
-            controller.createLocation();
+            List<Location> locationList = controller.listLocations();
+
+            Location location = locationList.get(0);
+            String locationName = location.getName();
+            Vertex source = location.getVertices().get(0);
+            Vertex dest = location.getVertices().get(1);
+            client = new Client("localhost", 34567);
+            TripMapController mapController = new TripMapController(client);
+            mapController.findShortestPath(locationName, source, dest);
         }
         catch (Exception e) {
             e.printStackTrace();
