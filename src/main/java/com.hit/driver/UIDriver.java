@@ -1,7 +1,7 @@
 package com.hit.driver;
 
 import javax.swing.*;
-import com.hit.view.WindowFrame;
+import com.hit.view.LocationsFrame;
 public class UIDriver {
 
     private static void createAndShowGUI() {
@@ -16,7 +16,7 @@ public class UIDriver {
 //        //Display the window.
 //        frame.pack();
 //        frame.setVisible(true);
-        new WindowFrame();
+        new LocationsFrame();
     }
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
