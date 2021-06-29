@@ -6,18 +6,27 @@ import com.hit.dm.Place;
 import com.hit.graph.GraphPath;
 import com.hit.graph.Vertex;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class LocationController {
     private Client client;
+    String serverAddress;
+    int serverPort;
 
     public LocationController(Client client) {
         this.client = client;
+    }
+    public LocationController(String serverAddress, int serverPort) {
+        this.serverAddress = serverAddress;
+        this.serverPort = serverPort;
     }
 
     public List<Location> listLocations() {
         List<Location> locationList = null;
         try {
+            Client client = new Client(serverAddress, serverPort);
             locationList = client.listLocations();
         }
         catch (Exception e) {
@@ -26,13 +35,15 @@ public class LocationController {
         return locationList;
     }
 
-    public void getLocation(String name) {
+    public Location getLocation(String name) {
+        Location location = null;
        try {
-           Location location = client.getLocation(name);
+           location = client.getLocation(name);
        }
        catch (Exception e) {
            e.printStackTrace();
        }
+       return location;
     }
 
     public void createLocation() {
@@ -57,11 +68,24 @@ public class LocationController {
 
     public void deleteLocation() {
         try {
+            Client client = new Client(serverAddress, serverPort);
             client.deleteLocation("location");
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public GraphPath findShortestPath(String locationName, Vertex source, Vertex dest) {
+        GraphPath path = null;
+        try {
+            Client client = new Client(serverAddress, serverPort);
+            path = client.findShortestPath(locationName, source, dest);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return path;
     }
 
     public static void main(String[] args) {
