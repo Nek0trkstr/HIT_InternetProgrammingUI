@@ -1,13 +1,12 @@
 package com.hit.controller;
 
+import com.github.javafaker.Faker;
 import com.hit.client.Client;
 import com.hit.dm.Location;
 import com.hit.dm.Place;
 import com.hit.graph.GraphPath;
 import com.hit.graph.Vertex;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class LocationController {
@@ -46,9 +45,9 @@ public class LocationController {
        return location;
     }
 
-    public void createLocation() {
+    public void createLocation(Location newLocation) {
         try {
-            Location newLocation = new Location("location", "test location");
+            Client client = new Client(serverAddress, serverPort);
             client.createLocation(newLocation);
         }
         catch (Exception e) {
@@ -56,9 +55,26 @@ public class LocationController {
         }
     }
 
-    public void editLocation() {
+    public void createRandomizedLocation() {
         try {
-            Location editedLocation = new Location("location", "edited location");
+            Client client = new Client(serverAddress, serverPort);
+            Faker faker = new Faker();
+            String locationName = faker.address().city();
+            String locationDescription = faker.chuckNorris().fact();
+            Location newLocation = new Location(locationName, locationDescription);
+            String placeName = faker.address().streetAddress();
+            Place place = new Place(placeName);
+            newLocation.addPlace(place);
+            client.createLocation(newLocation);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editLocation(Location editedLocation) {
+        try {
+            Client client = new Client(serverAddress, serverPort);
             client.editLocation(editedLocation);
         }
         catch (Exception e) {
@@ -66,10 +82,10 @@ public class LocationController {
         }
     }
 
-    public void deleteLocation() {
+    public void deleteLocation(String locationToDeleteName) {
         try {
             Client client = new Client(serverAddress, serverPort);
-            client.deleteLocation("location");
+            client.deleteLocation(locationToDeleteName);
         }
         catch (Exception e) {
             e.printStackTrace();

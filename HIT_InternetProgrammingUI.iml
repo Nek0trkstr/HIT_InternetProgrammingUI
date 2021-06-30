@@ -10,6 +10,10 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="gson-2.8.6" level="project" />
     <orderEntry type="library" name="HIT_InternetProgramming" level="project" />
+    <orderEntry type="library" name="javafaker-1.0.2" level="project" />
+    <orderEntry type="library" name="generex-1.0.2" level="project" />
+    <orderEntry type="library" name="commons-lang3-3.12.0" level="project" />
+    <orderEntry type="library" name="snakeyaml-1.29" level="project" />
     <orderEntry type="library" name="HIT_InternetProgrammingApp" level="project" />
   </component>
 </module>
