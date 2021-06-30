@@ -9,14 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class LocationsListPanel extends JPanel implements IExitObserver, ActionListener {
+public class LocationsListPanel extends JPanel implements ActionListener {
     private LocationController locationController;
-    private IExitObserver parentComponent;
     private List<Location> locationList;
-    private List<LocationSelectButton> locationSelectList;
 
-    public LocationsListPanel(IExitObserver parentComponent, LocationController locationController) {
-        this.parentComponent = parentComponent;
+    public LocationsListPanel(LocationController locationController) {
         this.locationController = locationController;
         Render();
     }
@@ -26,28 +23,18 @@ public class LocationsListPanel extends JPanel implements IExitObserver, ActionL
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setBorder(BorderFactory.createLineBorder(Color.RED));
         for(Location location : locationList) {
-            LocationSelectButton selectButton = new LocationSelectButton(this, location);
+            LocationSelectButton selectButton = new LocationSelectButton(location);
             selectButton.addActionListener(this);
             this.add(selectButton);
         }
     }
 
     @Override
-    public void ChildItemExited() {
-        System.out.println("Child Exited");
-    }
-
-    @Override
     public void actionPerformed(ActionEvent e) {
         for (Location location : locationList) {
             if (((JButton)e.getSource()).getText() == location.getName()) {
-               new PathQueryWindow(this, locationController, location);
+               new PathQueryWindow(locationController, location);
             }
         }
     }
-
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        new PathQueryWindow(this, locationController, )
-//    }
 }

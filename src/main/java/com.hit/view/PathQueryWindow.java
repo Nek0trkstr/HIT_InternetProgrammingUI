@@ -2,26 +2,14 @@ package com.hit.view;
 
 import com.hit.controller.LocationController;
 import com.hit.dm.Location;
-import com.hit.graph.Vertex;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 
-public class PathQueryWindow extends JFrame  implements ActionListener{
-    private IExitObserver parentComponent;
+public class PathQueryWindow extends JFrame {
     private LocationController locationController;
     private Location location;
-    private JComboBox sourceComboBox;
-    private JComboBox destinationComboBox;
-    private JButton submitButton = new JButton("Submit");
-    private Vertex selectedSource;
-    private Vertex selectedDestination;
 
-    public PathQueryWindow(IExitObserver parentComponent,LocationController locationController, Location location) {
-        this.parentComponent = parentComponent;
+    public PathQueryWindow(LocationController locationController, Location location) {
         this.locationController = locationController;
         this.location = location;
         Render();
@@ -42,18 +30,5 @@ public class PathQueryWindow extends JFrame  implements ActionListener{
 
         PathQueryPanel queryPanel = new PathQueryPanel(locationController, location);
         this.add(queryPanel, BorderLayout.CENTER);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == sourceComboBox) {
-            System.out.println("Source");
-        }
-        else if (e.getSource() == destinationComboBox) {
-            System.out.println("Destination");
-        }
-        else if (e.getSource() == submitButton) {
-            System.out.println("Submit");
-        }
     }
 }
